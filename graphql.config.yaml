@@ -1,0 +1,14 @@
+schema:
+  - "${NEXT_PUBLIC_WORDPRESS_URL}/graphql"
+documents:
+  - "fragments/**/*.ts"
+  - "components/**/*.tsx"
+  - "!generated/**/*"
+generates:
+  ./client/graphql.generated.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      withRefetchFn: true

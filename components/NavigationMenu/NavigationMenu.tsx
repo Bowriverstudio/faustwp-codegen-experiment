@@ -1,14 +1,24 @@
-import classNames from 'classnames/bind';
-import { gql } from '@apollo/client';
-import Link from 'next/link';
-import flatListToHierarchical from '../../utilities/flatListToHierarchical';
-import styles from './NavigationMenu.module.scss';
-import stylesFromWP from './NavigationMenuClassesFromWP.module.scss';
+import classNames from "classnames/bind";
+import { gql } from "@apollo/client";
+import Link from "next/link";
+import flatListToHierarchical from "../../utilities/flatListToHierarchical";
+import styles from "./NavigationMenu.module.scss";
+import stylesFromWP from "./NavigationMenuClassesFromWP.module.scss";
+import {
+  NavigationMenuItemFragmentFragment,
+  HierarchicalNavigationMenuItemFragment,
+} from "client";
 
 let cx = classNames.bind(styles);
 let cxFromWp = classNames.bind(stylesFromWP);
 
-export default function NavigationMenu({ menuItems, className }) {
+export default function NavigationMenu({
+  menuItems,
+  className,
+}: {
+  menuItems: NavigationMenuItemFragmentFragment[];
+  className?: string;
+}) {
   if (!menuItems) {
     return null;
   }
@@ -16,21 +26,21 @@ export default function NavigationMenu({ menuItems, className }) {
   // Based on https://www.wpgraphql.com/docs/menus/#hierarchical-data
   const hierarchicalMenuItems = flatListToHierarchical(menuItems);
 
-  function renderMenu(items) {
+  function renderMenu(items: HierarchicalNavigationMenuItemFragment[]) {
     return (
-      <ul className={cx('menu')}>
+      <ul className={cx("menu")}>
         {items.map((item) => {
           const { id, path, label, children, cssClasses } = item;
 
           // @TODO - Remove guard clause after ghost menu items are no longer appended to array.
-          if (!item.hasOwnProperty('__typename')) {
+          if (!item.hasOwnProperty("__typename")) {
             return null;
           }
 
           return (
             <li key={id} className={cxFromWp(cssClasses)}>
-              <Link href={path ?? ''}>{label ?? ''}</Link>
-              {children.length ? renderMenu(children, true) : null}
+              <Link href={path ?? ""}>{label ?? ""}</Link>
+              {children.length ? renderMenu(children) : null}
             </li>
           );
         })}
@@ -40,9 +50,10 @@ export default function NavigationMenu({ menuItems, className }) {
 
   return (
     <nav
-      className={cx(['component', className])}
+      className={cx(["component", className])}
       role="navigation"
-      aria-label={`${menuItems[0]?.menu?.node?.name} menu`}>
+      aria-label={`${menuItems[0]?.menu?.node?.name} menu`}
+    >
       {renderMenu(hierarchicalMenuItems)}
     </nav>
   );
