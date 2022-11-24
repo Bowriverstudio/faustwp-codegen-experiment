@@ -24,5 +24,6 @@ This will generate the file `client/graphql.generated.ts`
 
 ## References
 
+- https://frontendfirst.fm/episodes/type-safety-from-hasura-to-swr
 - https://discord.com/channels/836253505944813629/877940107016019998/1042169650655543346
 - https://the-guild.dev/graphql/codegen/docs/getting-started

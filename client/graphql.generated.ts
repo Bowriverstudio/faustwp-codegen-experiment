@@ -13,6 +13,13 @@ export type Scalars = {
   Float: number;
 };
 
+/** The atlasContentModelerSettings setting type */
+export type AtlasContentModelerSettingsSettings = {
+  __typename?: 'AtlasContentModelerSettingsSettings';
+  /** Opt into anonymous usage tracking to help us make Atlas Content Modeler better. */
+  atlasContentModelerUsageTracking?: Maybe<Scalars['String']>;
+};
+
 /** Avatars are profile images for users. WordPress by default uses the Gravatar service to host and fetch avatars from. */
 export type Avatar = {
   __typename?: 'Avatar';
@@ -1122,7 +1129,11 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   Page = 'PAGE',
   /** The Type of Content object */
-  Post = 'POST'
+  Post = 'POST',
+  /** The Type of Content object */
+  Project = 'PROJECT',
+  /** The Type of Content object */
+  Testimonial = 'TESTIMONIAL'
 }
 
 /** The Type of Identifier used to fetch a single Content Type node. To be used along with the "id" field. Default is "ID". */
@@ -1439,6 +1450,40 @@ export type CreatePostPayload = {
   post?: Maybe<Post>;
 };
 
+/** Input for the createProject mutation */
+export type CreateProjectInput = {
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars['ID']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Project Content Area */
+  contentArea?: InputMaybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']>;
+  /** Project Title */
+  projectTitle: Scalars['String'];
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  summary?: InputMaybe<Scalars['String']>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** The payload for the createProject mutation */
+export type CreateProjectPayload = {
+  __typename?: 'CreateProjectPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  project?: Maybe<Project>;
+};
+
 /** Input for the createTag mutation */
 export type CreateTagInput = {
   /** The slug that the post_tag will be an alias of */
@@ -1460,6 +1505,37 @@ export type CreateTagPayload = {
   clientMutationId?: Maybe<Scalars['String']>;
   /** The created post_tag */
   tag?: Maybe<Tag>;
+};
+
+/** Input for the createTestimonial mutation */
+export type CreateTestimonialInput = {
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars['ID']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  testimonialAuthor?: InputMaybe<Scalars['String']>;
+  testimonialContent?: InputMaybe<Scalars['String']>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** The payload for the createTestimonial mutation */
+export type CreateTestimonialPayload = {
+  __typename?: 'CreateTestimonialPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  testimonial?: Maybe<Testimonial>;
 };
 
 /** Input for the createUser mutation */
@@ -1686,6 +1762,27 @@ export type DeletePostPayload = {
   post?: Maybe<Post>;
 };
 
+/** Input for the deleteProject mutation */
+export type DeleteProjectInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  /** The ID of the project to delete */
+  id: Scalars['ID'];
+};
+
+/** The payload for the deleteProject mutation */
+export type DeleteProjectPayload = {
+  __typename?: 'DeleteProjectPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']>;
+  /** The object before it was deleted */
+  project?: Maybe<Project>;
+};
+
 /** Input for the deleteTag mutation */
 export type DeleteTagInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -1703,6 +1800,27 @@ export type DeleteTagPayload = {
   deletedId?: Maybe<Scalars['ID']>;
   /** The deteted term object */
   tag?: Maybe<Tag>;
+};
+
+/** Input for the deleteTestimonial mutation */
+export type DeleteTestimonialInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  /** The ID of the testimonial to delete */
+  id: Scalars['ID'];
+};
+
+/** The payload for the deleteTestimonial mutation */
+export type DeleteTestimonialPayload = {
+  __typename?: 'DeleteTestimonialPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']>;
+  /** The object before it was deleted */
+  testimonial?: Maybe<Testimonial>;
 };
 
 /** Input for the deleteUser mutation */
@@ -1835,26 +1953,6 @@ export type GenerateAuthorizationCodePayload = {
   code?: Maybe<Scalars['String']>;
   /** Error encountered during user authentication, if any */
   error?: Maybe<Scalars['String']>;
-};
-
-/** Component Summary */
-export type GenesisCustomBlockFileScaffoldObject = {
-  __typename?: 'GenesisCustomBlockFileScaffoldObject';
-  /** File Content */
-  content?: Maybe<Scalars['String']>;
-  /** File Name */
-  name?: Maybe<Scalars['String']>;
-};
-
-/** Component Summary */
-export type GenesisCustomBlockSummaryObject = {
-  __typename?: 'GenesisCustomBlockSummaryObject';
-  /** Component Name */
-  componentName?: Maybe<Scalars['String']>;
-  /** Name of Parent if exists */
-  parentComponentName?: Maybe<Scalars['String']>;
-  /** The Slug */
-  slug?: Maybe<Scalars['String']>;
 };
 
 /** Content node with hierarchical (parent/child) relationships */
@@ -2302,12 +2400,6 @@ export enum MediaItemSizeEnum {
   MediumLarge = 'MEDIUM_LARGE',
   /** MediaItem with the thumbnail size */
   Thumbnail = 'THUMBNAIL',
-  /** MediaItem with the woocommerce_gallery_thumbnail size */
-  WoocommerceGalleryThumbnail = 'WOOCOMMERCE_GALLERY_THUMBNAIL',
-  /** MediaItem with the woocommerce_single size */
-  WoocommerceSingle = 'WOOCOMMERCE_SINGLE',
-  /** MediaItem with the woocommerce_thumbnail size */
-  WoocommerceThumbnail = 'WOOCOMMERCE_THUMBNAIL',
   /** MediaItem with the 1536x1536 size */
   '1536X1536' = '_1536X1536',
   /** MediaItem with the 2048x2048 size */
@@ -2595,36 +2687,10 @@ export type MenuItemToMenuItemLinkableConnectionEdge = {
 
 /** Registered menu locations */
 export enum MenuLocationEnum {
-  /** Put the menu in the admin location */
-  Admin = 'ADMIN',
-  /** Put the menu in the allpages location */
-  Allpages = 'ALLPAGES',
-  /** Put the menu in the allpagesflat location */
-  Allpagesflat = 'ALLPAGESFLAT',
-  /** Put the menu in the authenticated location */
-  Authenticated = 'AUTHENTICATED',
-  /** Put the menu in the empty location */
-  Empty = 'EMPTY',
   /** Put the menu in the footer location */
   Footer = 'FOOTER',
-  /** Put the menu in the header location */
-  Header = 'HEADER',
   /** Put the menu in the primary location */
-  Primary = 'PRIMARY',
-  /** Put the menu in the short location */
-  Short = 'SHORT',
-  /** Put the menu in the shortflat location */
-  Shortflat = 'SHORTFLAT',
-  /** Put the menu in the social location */
-  Social = 'SOCIAL',
-  /** Put the menu in the subscriber location */
-  Subscriber = 'SUBSCRIBER',
-  /** Put the menu in the testing location */
-  Testing = 'TESTING',
-  /** Put the menu in the testprimary location */
-  Testprimary = 'TESTPRIMARY',
-  /** Put the menu in the unauthenticated location */
-  Unauthenticated = 'UNAUTHENTICATED'
+  Primary = 'PRIMARY'
 }
 
 /** The Type of Identifier used to fetch a single node. Default is "ID". To be used along with the "id" field. */
@@ -3962,6 +4028,8 @@ export type PostPostFormatsNodeInput = {
 export enum PostStatusEnum {
   /** Objects with the auto-draft status */
   AutoDraft = 'AUTO_DRAFT',
+  /** Objects with the dp-rewrite-republish status */
+  DpRewriteRepublish = 'DP_REWRITE_REPUBLISH',
   /** Objects with the draft status */
   Draft = 'DRAFT',
   /** Objects with the future status */
@@ -3983,23 +4051,7 @@ export enum PostStatusEnum {
   /** Objects with the request-pending status */
   RequestPending = 'REQUEST_PENDING',
   /** Objects with the trash status */
-  Trash = 'TRASH',
-  /** Objects with the wc-cancelled status */
-  WcCancelled = 'WC_CANCELLED',
-  /** Objects with the wc-checkout-draft status */
-  WcCheckoutDraft = 'WC_CHECKOUT_DRAFT',
-  /** Objects with the wc-completed status */
-  WcCompleted = 'WC_COMPLETED',
-  /** Objects with the wc-failed status */
-  WcFailed = 'WC_FAILED',
-  /** Objects with the wc-on-hold status */
-  WcOnHold = 'WC_ON_HOLD',
-  /** Objects with the wc-pending status */
-  WcPending = 'WC_PENDING',
-  /** Objects with the wc-processing status */
-  WcProcessing = 'WC_PROCESSING',
-  /** Objects with the wc-refunded status */
-  WcRefunded = 'WC_REFUNDED'
+  Trash = 'TRASH'
 }
 
 /** Set relationships between the post to tags */
@@ -4518,6 +4570,137 @@ export type PostTypeLabelDetails = {
   viewItems?: Maybe<Scalars['String']>;
 };
 
+/** The project type */
+export type Project = ContentNode & DatabaseIdentifier & Node & NodeWithAuthor & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
+  __typename?: 'Project';
+  /** Connection between the NodeWithAuthor type and the User type */
+  author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
+  /** The database identifier of the author of the node */
+  authorDatabaseId?: Maybe<Scalars['Int']>;
+  /** The globally unique identifier of the author of the node */
+  authorId?: Maybe<Scalars['ID']>;
+  /** @deprecated Deprecated in favor of using Next.js pages */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /** Project Content Area */
+  contentArea?: Maybe<Scalars['String']>;
+  /** Connection between the ContentNode type and the ContentType type */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /** The name of the Content Type the node belongs to */
+  contentTypeName: Scalars['String'];
+  /** The unique identifier stored in the database */
+  databaseId: Scalars['Int'];
+  /** Post publishing date. */
+  date?: Maybe<Scalars['String']>;
+  /** The publishing date set in GMT. */
+  dateGmt?: Maybe<Scalars['String']>;
+  /** The desired slug of the post */
+  desiredSlug?: Maybe<Scalars['String']>;
+  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /** The RSS enclosure for the object */
+  enclosure?: Maybe<Scalars['String']>;
+  /** Connection between the ContentNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /** The database identifier for the featured image node assigned to the content node */
+  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
+  /** Globally unique ID of the featured image assigned to the node */
+  featuredImageId?: Maybe<Scalars['ID']>;
+  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+  guid?: Maybe<Scalars['String']>;
+  /** The globally unique identifier of the project object. */
+  id: Scalars['ID'];
+  /** Project Featured Image */
+  image?: Maybe<MediaItem>;
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean'];
+  /** Whether the object is a node in the preview state */
+  isPreview?: Maybe<Scalars['Boolean']>;
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean'];
+  /** The user that most recently edited the node */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /** The permalink of the post */
+  link?: Maybe<Scalars['String']>;
+  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+  modified?: Maybe<Scalars['String']>;
+  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+  modifiedGmt?: Maybe<Scalars['String']>;
+  /** Connection between the Project type and the project type */
+  preview?: Maybe<ProjectToPreviewConnectionEdge>;
+  /** The database id of the preview node */
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  /** Whether the object is a node in the preview state */
+  previewRevisionId?: Maybe<Scalars['ID']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  projectId: Scalars['Int'];
+  /** Project Title */
+  projectTitle?: Maybe<Scalars['String']>;
+  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+  slug?: Maybe<Scalars['String']>;
+  /** The current status of the object */
+  status?: Maybe<Scalars['String']>;
+  summary?: Maybe<Scalars['String']>;
+  /** The template assigned to the node */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']>;
+};
+
+
+/** The project type */
+export type ProjectEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The project type */
+export type ProjectEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The project type */
+export type ProjectTitleArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum ProjectIdType {
+  /** Identify a resource by the Database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  Id = 'ID',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  Slug = 'SLUG',
+  /** Identify a resource by the URI. */
+  Uri = 'URI'
+}
+
+/** Connection between the Project type and the project type */
+export type ProjectToPreviewConnectionEdge = {
+  __typename?: 'ProjectToPreviewConnectionEdge';
+  /** The node of the connection, without the edges */
+  node?: Maybe<Project>;
+};
+
 /** The reading setting type */
 export type ReadingSettings = {
   __typename?: 'ReadingSettings';
@@ -4641,8 +4824,12 @@ export type RootMutation = {
   createPost?: Maybe<CreatePostPayload>;
   /** The payload for the createPostFormat mutation */
   createPostFormat?: Maybe<CreatePostFormatPayload>;
+  /** The payload for the createProject mutation */
+  createProject?: Maybe<CreateProjectPayload>;
   /** The payload for the createTag mutation */
   createTag?: Maybe<CreateTagPayload>;
+  /** The payload for the createTestimonial mutation */
+  createTestimonial?: Maybe<CreateTestimonialPayload>;
   /** The payload for the createUser mutation */
   createUser?: Maybe<CreateUserPayload>;
   /** The payload for the deleteCategory mutation */
@@ -4657,8 +4844,12 @@ export type RootMutation = {
   deletePost?: Maybe<DeletePostPayload>;
   /** The payload for the deletePostFormat mutation */
   deletePostFormat?: Maybe<DeletePostFormatPayload>;
+  /** The payload for the deleteProject mutation */
+  deleteProject?: Maybe<DeleteProjectPayload>;
   /** The payload for the deleteTag mutation */
   deleteTag?: Maybe<DeleteTagPayload>;
+  /** The payload for the deleteTestimonial mutation */
+  deleteTestimonial?: Maybe<DeleteTestimonialPayload>;
   /** The payload for the deleteUser mutation */
   deleteUser?: Maybe<DeleteUserPayload>;
   /** The payload for the generateAuthorizationCode mutation */
@@ -4685,10 +4876,14 @@ export type RootMutation = {
   updatePost?: Maybe<UpdatePostPayload>;
   /** The payload for the UpdatePostFormat mutation */
   updatePostFormat?: Maybe<UpdatePostFormatPayload>;
+  /** The payload for the updateProject mutation */
+  updateProject?: Maybe<UpdateProjectPayload>;
   /** The payload for the updateSettings mutation */
   updateSettings?: Maybe<UpdateSettingsPayload>;
   /** The payload for the UpdateTag mutation */
   updateTag?: Maybe<UpdateTagPayload>;
+  /** The payload for the updateTestimonial mutation */
+  updateTestimonial?: Maybe<UpdateTestimonialPayload>;
   /** The payload for the updateUser mutation */
   updateUser?: Maybe<UpdateUserPayload>;
 };
@@ -4731,8 +4926,20 @@ export type RootMutationCreatePostFormatArgs = {
 
 
 /** The root mutation */
+export type RootMutationCreateProjectArgs = {
+  input: CreateProjectInput;
+};
+
+
+/** The root mutation */
 export type RootMutationCreateTagArgs = {
   input: CreateTagInput;
+};
+
+
+/** The root mutation */
+export type RootMutationCreateTestimonialArgs = {
+  input: CreateTestimonialInput;
 };
 
 
@@ -4779,8 +4986,20 @@ export type RootMutationDeletePostFormatArgs = {
 
 
 /** The root mutation */
+export type RootMutationDeleteProjectArgs = {
+  input: DeleteProjectInput;
+};
+
+
+/** The root mutation */
 export type RootMutationDeleteTagArgs = {
   input: DeleteTagInput;
+};
+
+
+/** The root mutation */
+export type RootMutationDeleteTestimonialArgs = {
+  input: DeleteTestimonialInput;
 };
 
 
@@ -4863,6 +5082,12 @@ export type RootMutationUpdatePostFormatArgs = {
 
 
 /** The root mutation */
+export type RootMutationUpdateProjectArgs = {
+  input: UpdateProjectInput;
+};
+
+
+/** The root mutation */
 export type RootMutationUpdateSettingsArgs = {
   input: UpdateSettingsInput;
 };
@@ -4871,6 +5096,12 @@ export type RootMutationUpdateSettingsArgs = {
 /** The root mutation */
 export type RootMutationUpdateTagArgs = {
   input: UpdateTagInput;
+};
+
+
+/** The root mutation */
+export type RootMutationUpdateTestimonialArgs = {
+  input: UpdateTestimonialInput;
 };
 
 
@@ -4884,6 +5115,8 @@ export type RootQuery = {
   __typename?: 'RootQuery';
   /** Entry point to get all settings for the site */
   allSettings?: Maybe<Settings>;
+  /** Fields of the &#039;AtlasContentModelerSettingsSettings&#039; settings group */
+  atlasContentModelerSettingsSettings?: Maybe<AtlasContentModelerSettingsSettings>;
   /** Connection between the RootQuery type and the category type */
   categories?: Maybe<RootQueryToCategoryConnection>;
   /** A 0bject */
@@ -4904,13 +5137,6 @@ export type RootQuery = {
   discussionSettings?: Maybe<DiscussionSettings>;
   /** Fields of the &#039;GeneralSettings&#039; settings group */
   generalSettings?: Maybe<GeneralSettings>;
-  /** Return a list of the scaffolding */
-  genesisCustomBlockFileScaffold?: Maybe<Array<Maybe<GenesisCustomBlockFileScaffoldObject>>>;
-  /** Return a list of the type genesis-custom-blocks ComponentName Does not include Repeater Blocks */
-  genesisCustomBlockSummary?: Maybe<Array<Maybe<GenesisCustomBlockSummaryObject>>>;
-  genesisCustomBlockTypescript?: Maybe<Scalars['String']>;
-  /** Return a list of the type genesis-custom-blocks ComponentName */
-  genesisGenerateParseGenesisCustomBlocks?: Maybe<Scalars['String']>;
   /** An object of the mediaItem Type.  */
   mediaItem?: Maybe<MediaItem>;
   /**
@@ -4958,6 +5184,15 @@ export type RootQuery = {
   postFormats?: Maybe<RootQueryToPostFormatConnection>;
   /** Connection between the RootQuery type and the post type */
   posts?: Maybe<RootQueryToPostConnection>;
+  /** An object of the project Type. Project Content Model */
+  project?: Maybe<Project>;
+  /**
+   * A project object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  projectBy?: Maybe<Project>;
+  /** Connection between the RootQuery type and the project type */
+  projects?: Maybe<RootQueryToProjectConnection>;
   /** Fields of the &#039;ReadingSettings&#039; settings group */
   readingSettings?: Maybe<ReadingSettings>;
   /** Connection between the RootQuery type and the EnqueuedScript type */
@@ -4978,6 +5213,15 @@ export type RootQuery = {
   termNode?: Maybe<TermNode>;
   /** Connection between the RootQuery type and the TermNode type */
   terms?: Maybe<RootQueryToTermNodeConnection>;
+  /** An object of the testimonial Type. Testimonial content model for the testimonials carousel */
+  testimonial?: Maybe<Testimonial>;
+  /**
+   * A testimonial object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  testimonialBy?: Maybe<Testimonial>;
+  /** Connection between the RootQuery type and the testimonial type */
+  testimonials?: Maybe<RootQueryToTestimonialConnection>;
   /** A Theme object */
   theme?: Maybe<Theme>;
   /** Connection between the RootQuery type and the Theme type */
@@ -5063,12 +5307,6 @@ export type RootQueryContentTypesArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-};
-
-
-/** The root entry point into the Graph */
-export type RootQueryGenesisCustomBlockFileScaffoldArgs = {
-  slug: Scalars['String'];
 };
 
 
@@ -5232,6 +5470,33 @@ export type RootQueryPostsArgs = {
 
 
 /** The root entry point into the Graph */
+export type RootQueryProjectArgs = {
+  asPreview?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+  idType?: InputMaybe<ProjectIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryProjectByArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  projectId?: InputMaybe<Scalars['Int']>;
+  slug?: InputMaybe<Scalars['String']>;
+  uri?: InputMaybe<Scalars['String']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryProjectsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<RootQueryToProjectConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
 export type RootQueryRegisteredScriptsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -5307,6 +5572,33 @@ export type RootQueryTermsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<RootQueryToTermNodeConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryTestimonialArgs = {
+  asPreview?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+  idType?: InputMaybe<TestimonialIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryTestimonialByArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  slug?: InputMaybe<Scalars['String']>;
+  testimonialId?: InputMaybe<Scalars['Int']>;
+  uri?: InputMaybe<Scalars['String']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryTestimonialsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<RootQueryToTestimonialConnectionWhereArgs>;
 };
 
 
@@ -6060,6 +6352,72 @@ export type RootQueryToPostFormatConnectionWhereArgs = {
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** Connection between the RootQuery type and the project type */
+export type RootQueryToProjectConnection = {
+  __typename?: 'RootQueryToProjectConnection';
+  /** Edges for the RootQueryToProjectConnection connection */
+  edges?: Maybe<Array<Maybe<RootQueryToProjectConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Project>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type RootQueryToProjectConnectionEdge = {
+  __typename?: 'RootQueryToProjectConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<Project>;
+};
+
+/** Arguments for filtering the RootQueryToProjectConnection connection */
+export type RootQueryToProjectConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars['Int']>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars['String']>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
 /** Connection between the RootQuery type and the tag type */
 export type RootQueryToTagConnection = {
   __typename?: 'RootQueryToTagConnection';
@@ -6214,6 +6572,72 @@ export type RootQueryToTermNodeConnectionWhereArgs = {
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** Connection between the RootQuery type and the testimonial type */
+export type RootQueryToTestimonialConnection = {
+  __typename?: 'RootQueryToTestimonialConnection';
+  /** Edges for the RootQueryToTestimonialConnection connection */
+  edges?: Maybe<Array<Maybe<RootQueryToTestimonialConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Testimonial>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type RootQueryToTestimonialConnectionEdge = {
+  __typename?: 'RootQueryToTestimonialConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<Testimonial>;
+};
+
+/** Arguments for filtering the RootQueryToTestimonialConnection connection */
+export type RootQueryToTestimonialConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars['Int']>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars['String']>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
 /** Connection between the RootQuery type and the Theme type */
 export type RootQueryToThemeConnection = {
   __typename?: 'RootQueryToThemeConnection';
@@ -6333,6 +6757,8 @@ export type SendPasswordResetEmailPayload = {
 /** All of the registered settings */
 export type Settings = {
   __typename?: 'Settings';
+  /** Settings of the the string Settings Group */
+  atlasContentModelerSettingsSettingsAtlasContentModelerUsageTracking?: Maybe<Scalars['String']>;
   /** Settings of the the string Settings Group */
   discussionSettingsDefaultCommentStatus?: Maybe<Scalars['String']>;
   /** Settings of the the string Settings Group */
@@ -6862,6 +7288,126 @@ export enum TermObjectsConnectionOrderbyEnum {
   TermOrder = 'TERM_ORDER'
 }
 
+/** The testimonial type */
+export type Testimonial = ContentNode & DatabaseIdentifier & Node & NodeWithAuthor & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
+  __typename?: 'Testimonial';
+  /** Connection between the NodeWithAuthor type and the User type */
+  author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
+  /** The database identifier of the author of the node */
+  authorDatabaseId?: Maybe<Scalars['Int']>;
+  /** The globally unique identifier of the author of the node */
+  authorId?: Maybe<Scalars['ID']>;
+  /** @deprecated Deprecated in favor of using Next.js pages */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /** Connection between the ContentNode type and the ContentType type */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /** The name of the Content Type the node belongs to */
+  contentTypeName: Scalars['String'];
+  /** The unique identifier stored in the database */
+  databaseId: Scalars['Int'];
+  /** Post publishing date. */
+  date?: Maybe<Scalars['String']>;
+  /** The publishing date set in GMT. */
+  dateGmt?: Maybe<Scalars['String']>;
+  /** The desired slug of the post */
+  desiredSlug?: Maybe<Scalars['String']>;
+  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /** The RSS enclosure for the object */
+  enclosure?: Maybe<Scalars['String']>;
+  /** Connection between the ContentNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+  guid?: Maybe<Scalars['String']>;
+  /** The globally unique identifier of the testimonial object. */
+  id: Scalars['ID'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean'];
+  /** Whether the object is a node in the preview state */
+  isPreview?: Maybe<Scalars['Boolean']>;
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean'];
+  /** The user that most recently edited the node */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /** The permalink of the post */
+  link?: Maybe<Scalars['String']>;
+  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+  modified?: Maybe<Scalars['String']>;
+  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+  modifiedGmt?: Maybe<Scalars['String']>;
+  /** Connection between the Testimonial type and the testimonial type */
+  preview?: Maybe<TestimonialToPreviewConnectionEdge>;
+  /** The database id of the preview node */
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  /** Whether the object is a node in the preview state */
+  previewRevisionId?: Maybe<Scalars['ID']>;
+  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+  slug?: Maybe<Scalars['String']>;
+  /** The current status of the object */
+  status?: Maybe<Scalars['String']>;
+  /** The template assigned to the node */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<Scalars['String']>>>;
+  testimonialAuthor?: Maybe<Scalars['String']>;
+  testimonialContent?: Maybe<Scalars['String']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  testimonialId: Scalars['Int'];
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']>;
+};
+
+
+/** The testimonial type */
+export type TestimonialEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The testimonial type */
+export type TestimonialEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The testimonial type */
+export type TestimonialTitleArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum TestimonialIdType {
+  /** Identify a resource by the Database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  Id = 'ID',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  Slug = 'SLUG',
+  /** Identify a resource by the URI. */
+  Uri = 'URI'
+}
+
+/** Connection between the Testimonial type and the testimonial type */
+export type TestimonialToPreviewConnectionEdge = {
+  __typename?: 'TestimonialToPreviewConnectionEdge';
+  /** The node of the connection, without the edges */
+  node?: Maybe<Testimonial>;
+};
+
 /** A theme object */
 export type Theme = Node & {
   __typename?: 'Theme';
@@ -7124,8 +7670,46 @@ export type UpdatePostPayload = {
   post?: Maybe<Post>;
 };
 
+/** Input for the updateProject mutation */
+export type UpdateProjectInput = {
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars['ID']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Project Content Area */
+  contentArea?: InputMaybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']>;
+  /** The ID of the project object */
+  id: Scalars['ID'];
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']>;
+  /** Project Title */
+  projectTitle?: InputMaybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  summary?: InputMaybe<Scalars['String']>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** The payload for the updateProject mutation */
+export type UpdateProjectPayload = {
+  __typename?: 'UpdateProjectPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  project?: Maybe<Project>;
+};
+
 /** Input for the updateSettings mutation */
 export type UpdateSettingsInput = {
+  /** Opt into anonymous usage tracking to help us make Atlas Content Modeler better. */
+  atlasContentModelerSettingsSettingsAtlasContentModelerUsageTracking?: InputMaybe<Scalars['String']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars['String']>;
   /** Allow people to submit comments on new posts. */
@@ -7171,6 +7755,8 @@ export type UpdateSettingsPayload = {
   __typename?: 'UpdateSettingsPayload';
   /** Update all settings. */
   allSettings?: Maybe<Settings>;
+  /** Update the AtlasContentModelerSettingsSettings setting. */
+  atlasContentModelerSettingsSettings?: Maybe<AtlasContentModelerSettingsSettings>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<Scalars['String']>;
   /** Update the DiscussionSettings setting. */
@@ -7206,6 +7792,39 @@ export type UpdateTagPayload = {
   clientMutationId?: Maybe<Scalars['String']>;
   /** The created post_tag */
   tag?: Maybe<Tag>;
+};
+
+/** Input for the updateTestimonial mutation */
+export type UpdateTestimonialInput = {
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars['ID']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']>;
+  /** The ID of the testimonial object */
+  id: Scalars['ID'];
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  testimonialAuthor?: InputMaybe<Scalars['String']>;
+  testimonialContent?: InputMaybe<Scalars['String']>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** The payload for the updateTestimonial mutation */
+export type UpdateTestimonialPayload = {
+  __typename?: 'UpdateTestimonialPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  testimonial?: Maybe<Testimonial>;
 };
 
 /** Input for the updateUser mutation */
@@ -7308,6 +7927,8 @@ export type User = Commenter & DatabaseIdentifier & Node & UniformResourceIdenti
   pages?: Maybe<UserToPageConnection>;
   /** Connection between the User type and the post type */
   posts?: Maybe<UserToPostConnection>;
+  /** Connection between the User type and the project type */
+  projects?: Maybe<UserToProjectConnection>;
   /** The date the user registered or was created. The field follows a full ISO8601 date string format. */
   registeredDate?: Maybe<Scalars['String']>;
   /** Connection between the User and Revisions authored by the user */
@@ -7317,6 +7938,8 @@ export type User = Commenter & DatabaseIdentifier & Node & UniformResourceIdenti
   /** The slug for the user. This field is equivalent to WP_User-&gt;user_nicename */
   slug?: Maybe<Scalars['String']>;
   templates?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** Connection between the User type and the testimonial type */
+  testimonials?: Maybe<UserToTestimonialConnection>;
   /** The unique resource identifier path */
   uri?: Maybe<Scalars['String']>;
   /** A website url that is associated with the user. */
@@ -7398,6 +8021,16 @@ export type UserPostsArgs = {
 
 
 /** A User object */
+export type UserProjectsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<UserToProjectConnectionWhereArgs>;
+};
+
+
+/** A User object */
 export type UserRevisionsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -7413,6 +8046,16 @@ export type UserRolesArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** A User object */
+export type UserTestimonialsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<UserToTestimonialConnectionWhereArgs>;
 };
 
 /** The Type of Identifier used to fetch a single User node. To be used along with the "id" field. Default is "ID". */
@@ -7449,15 +8092,13 @@ export type UserRole = Node & {
 /** Names of available user roles */
 export enum UserRoleEnum {
   /** User role with specific capabilities */
+  Administrator = 'ADMINISTRATOR',
+  /** User role with specific capabilities */
   Author = 'AUTHOR',
   /** User role with specific capabilities */
   Contributor = 'CONTRIBUTOR',
   /** User role with specific capabilities */
-  Customer = 'CUSTOMER',
-  /** User role with specific capabilities */
   Editor = 'EDITOR',
-  /** User role with specific capabilities */
-  ShopManager = 'SHOP_MANAGER',
   /** User role with specific capabilities */
   Subscriber = 'SUBSCRIBER'
 }
@@ -7858,6 +8499,138 @@ export type UserToPostConnectionWhereArgs = {
   tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Array of tag slugs, used to include objects in ANY specified tags */
   tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** Connection between the User type and the project type */
+export type UserToProjectConnection = {
+  __typename?: 'UserToProjectConnection';
+  /** Edges for the UserToProjectConnection connection */
+  edges?: Maybe<Array<Maybe<UserToProjectConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Project>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type UserToProjectConnectionEdge = {
+  __typename?: 'UserToProjectConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<Project>;
+};
+
+/** Arguments for filtering the UserToProjectConnection connection */
+export type UserToProjectConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars['Int']>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars['String']>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** Connection between the User type and the testimonial type */
+export type UserToTestimonialConnection = {
+  __typename?: 'UserToTestimonialConnection';
+  /** Edges for the UserToTestimonialConnection connection */
+  edges?: Maybe<Array<Maybe<UserToTestimonialConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Testimonial>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type UserToTestimonialConnectionEdge = {
+  __typename?: 'UserToTestimonialConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<Testimonial>;
+};
+
+/** Arguments for filtering the UserToTestimonialConnection connection */
+export type UserToTestimonialConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars['Int']>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars['String']>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
   title?: InputMaybe<Scalars['String']>;
 };
